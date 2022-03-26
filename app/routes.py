@@ -33,13 +33,26 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/change_password')
+@app.route('/change_password', methods=['GET', 'POST'])
 def change_password():
+    if not current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = ChangePasswordForm()
-    '''
-    Implement this function for Activity 9.
-    Verify that old password matches and the new password and retype also match.
-    '''
+    if form.new_pass.data == form.new_pass_retype.data:
+        if form.validate_on_submit():
+            user = db.session.query(User).filter_by(role = current_user.role).first()
+            check_pass = user.check_password(form.old_pass.data)
+            if check_pass:                            
+                user.set_password(form.new_pass.data)                 
+                db.session.commit()
+                print('Password was changed successfully', file=sys.stderr)
+                return redirect(url_for('view'))
+            else:
+                print('Wrong Password Entered: Change Failed', file=sys.stderr)
+                return redirect(url_for('change_password'))
+    else:
+        print('new password not the same', file=sys.stderr)
+        return redirect(url_for('change_passsword'))
     return render_template('change_password.html', form = form)
 
 def is_admin():
@@ -128,3 +141,14 @@ def sort_by_name():
     all = db.session.query(City).order_by(City.city).all()
     print(all, file=sys.stderr)
     return render_template('view_cities.html', cities=all)
+
+@app.route('/add_user', methods=['GET','POST'])
+def add_user():
+    form = AddUserForm()
+    
+    
+
+
+
+
+    

@@ -1,1 +1,1 @@
-# hw3
+# Hello Dr. Antonios, I wanted to let you know I was running into one error in regards to the add_user route.  So this .zip contains 1-3 completed for exercise 1.  I plan to finish the small error that keeps re occurring within part 4 of exercise 1 by tomorrow.  Hope this is ok since I want to turn this in working 100%.  Im sure its some syntax error but after staring at the screen for so long i think its best if i re try tomorrow.  Thank you and see you Monday!

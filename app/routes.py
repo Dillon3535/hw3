@@ -162,5 +162,5 @@ def add_user():
         return render_template('add_user.html', form=form)
     else:
         print("Admin Access Required!", file=sys.stderr)
-        return render_template('homepage.html')
+    return render_template('homepage.html')
     

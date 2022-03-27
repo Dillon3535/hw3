@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, StringField, PasswordField, SelectField
+from wtforms import StringField, IntegerField, SubmitField, StringField, PasswordField
 from wtforms.validators import DataRequired
 
 class AddForm(FlaskForm):
@@ -29,5 +29,4 @@ class ChangePasswordForm(FlaskForm):
 class AddUserForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    role = SelectField(u'Account Type', choices=[('admin', 'Admin'), ('user', 'User')])
     submit = SubmitField('Save')

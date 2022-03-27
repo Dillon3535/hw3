@@ -1,7 +1,7 @@
 from app import app
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
-from app.forms import AddForm, DeleteForm, SearchForm, LoginForm, ChangePasswordForm
+from app.forms import AddForm, DeleteForm, SearchForm, LoginForm, ChangePasswordForm, AddUserForm
 from app import db
 from app.models import City, User
 import sys
@@ -144,11 +144,23 @@ def sort_by_name():
 
 @app.route('/add_user', methods=['GET','POST'])
 def add_user():
-    form = AddUserForm()
+    if is_admin():
+        form = AddUserForm()
     
-    
-
-
-
-
+        if request.method == 'POST':
+            form_data = form.data
+            user = User.query.filter_by(username=form_data['username']).first()
+            if user is None:
+                reg_user = User(username=form_data['username'], role = form_data['role'])
+                reg_user.set_password(form_data['password'])
+                db.session.add(reg_user)
+                db.session.commit()
+                print('Account created successfully!', file=sys.stderr)
+                return render_template('homepage.html')
+            else:
+                print("Account already exists!", file=sys.stderr)
+        return render_template('add_user.html', form=form)
+    else:
+        print("Admin Access Required!", file=sys.stderr)
+        return render_template('homepage.html')
     

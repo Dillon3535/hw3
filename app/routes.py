@@ -151,7 +151,7 @@ def add_user():
             form_data = form.data
             user = User.query.filter_by(username=form_data['username']).first()
             if user is None:
-                reg_user = User(username=form_data['username'], role = form_data['role'])
+                reg_user = User(username=form_data['username'], role = 'user')
                 reg_user.set_password(form_data['password'])
                 db.session.add(reg_user)
                 db.session.commit()
@@ -163,4 +163,3 @@ def add_user():
     else:
         print("Admin Access Required!", file=sys.stderr)
     return render_template('homepage.html')
-    
